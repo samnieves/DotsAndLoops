@@ -1,0 +1,44 @@
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib import animation
+from matplotlib import cm, colors
+from mpl_toolkits.mplot3d import Axes3D
+
+def Sphere_har1(ml, l1, theta, phi):
+       return np.sqrt(3./4*np.pi)*np.cos(theta)
+       
+def Sphere_har2(ml, l2, theta, phi):
+    np.sqrt(5./16*np.pi)*(3*np.cos(theta)*np.cos(theta)-1)
+    
+def Sphere_En1(mu, r, l1):
+    return 1/(2*mu*r*r)*l1*(l1+1)
+
+def Sphere_En2(mu, r, l2):
+    return 1/(2*mu*r*r)*l2*(l2+1)
+
+ml = 0.
+l1 = 1.
+l2 = 2.
+theta = np.linspace(0,np.pi,100)
+phi = np.linspace(0,np.pi*2,100)    
+mu = 0.499826
+r = 1.39839789
+phi, theta = np.meshgrid(phi, theta)
+
+psi1 = Sphere_har1(ml, l1, theta, phi)
+psi2 = Sphere_har2(ml, l2, theta, phi)
+En1 = Sphere_En1(mu, r, l1)
+En2 = Sphere_En2(mu, r, l2)
+end = psi1*En1
+
+# The Cartesian coordinates of the unit sphere
+x = np.sin(phi) * np.cos(theta)
+y = np.sin(phi) * np.sin(theta)
+z = np.cos(phi)
+
+fig = plt.figure(figsize=plt.figaspect(1.))
+ax = fig.add_subplot(111, projection= '3d')
+ax.plot_surface(x, y, z, rstride=1, cstride=1, facecolors=cm.prism(end))
+
+ax.set_axis_off()
+plt.show()
