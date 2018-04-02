@@ -50,8 +50,9 @@ def FourierAnalysis(phi, Psi, ml):
     return cn
 
 
-
+### set up parameters for Gaussian Wavepacket in theta-space
 sig = 0.1
+### include quantum numbers from m=-100 to 100, probably more than necessary
 nt=np.linspace(-100, 100, 201)
 phi0 = np.pi/3
 m1 = 1
@@ -59,18 +60,22 @@ m2 = 1
 mu = (m1*m2)/(m1+m2)
 r = 1.39839789
 k0 = 5*np.pi
-
+### compute wavepacket
 Psi = Gauss_Packet(x, phi0, sig, k0)
+### compute expansion coefficients for building wavepacket from RR energy eigenfunctions
 cn = FourierAnalysis(x, Psi, nt)
-print(cn)
+### uncomment if you want to print out all expansion coefficients
+#print(cn)
 
+### build the initial expansion just to see if FourierAnalysis is working
 psi_exp = np.zeros_like(Psi)
 
 for i in range(0,len(cn)):
   psi_exp = psi_exp + cn[i]*rigid_eigenfunc(x, nt[i])
 
-#plt.plot(x, np.real(Psi), 'red', x, np.real(psi_exp), 'b--')
-#plt.show()
+### Plot real part of Gaussian wavepacket and real part of expansion 
+plt.plot(x, np.real(Psi), 'red', x, np.real(psi_exp), 'b--')
+plt.show()
 
 def init():
     line.set_data([], [])
