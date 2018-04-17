@@ -100,7 +100,7 @@ psi_exp = np.zeros_like(Psi)
 for i in range(0,len(cn)):
   psi_exp = psi_exp + cn[i]*rigid_eigenfunc(x, nt[i])*rigid_time(nt[i],10)
 
-
+# CREATE NEW LIST OF VALUES INSTEAD OF USING SAME "nt" 
 P=np.conj(psi_exp)*psi_exp
 list_of_candidates = rigid_energy(nt)
 Pn = Normalize(P)
